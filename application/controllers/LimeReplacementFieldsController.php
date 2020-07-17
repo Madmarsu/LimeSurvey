@@ -13,7 +13,7 @@
  */
 class LimeReplacementFieldsController extends  LSBaseController
 {
-    
+
     public function actionIndex()
     {
         $surveyid = (int) App()->request->getQuery('surveyid');
@@ -30,7 +30,7 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
 
         if ($newType) {
-            $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid );
+            $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid);
             return;
         }
 
@@ -62,7 +62,7 @@ class LimeReplacementFieldsController extends  LSBaseController
             $data['replacements'][gT('Survey format')] = $surveyformat;
         }
 
-        $this->getController()->renderPartial('/admin/super/_renderJson', ['data' => $data]);
+        $this->renderPartial('/admin/super/_renderJson', ['data' => $data]);
         return;
     }
 
@@ -159,9 +159,9 @@ class LimeReplacementFieldsController extends  LSBaseController
             $isPreviousPageQuestion = true;
         } elseif ($surveyformat == "G") {
             if ($isPreviousPageQuestion === true) {
-// Last question was on a previous page
+                // Last question was on a previous page
                 if ($field["gid"] == $gid) {
-// This question is on same page
+                    // This question is on same page
                     $isPreviousPageQuestion = false;
                 }
             }
@@ -225,12 +225,13 @@ class LimeReplacementFieldsController extends  LSBaseController
             return array($replFields, false);
         }
 
-        if (strpos($fieldtype, 'survey-desc') !== false
+        if (
+            strpos($fieldtype, 'survey-desc') !== false
             || strpos($fieldtype, 'survey-welc') !== false
             || strpos($fieldtype, 'survey-endtext') !== false
-            || strpos($fieldtype, 'edittitle') !== false// for translation
-            || strpos($fieldtype, 'editdescription') !== false// for translation
-            || strpos($fieldtype, 'editwelcome') !== false// for translation
+            || strpos($fieldtype, 'edittitle') !== false // for translation
+            || strpos($fieldtype, 'editdescription') !== false // for translation
+            || strpos($fieldtype, 'editwelcome') !== false // for translation
             || strpos($fieldtype, 'editend') !== false
         ) { // for translation
 
@@ -247,8 +248,8 @@ class LimeReplacementFieldsController extends  LSBaseController
             $replFields['ADMINNAME'] = gT("Name of the survey administrator");
             $replFields['ADMINEMAIL'] = gT("Email address of the survey administrator");
             return array($replFields, false);
-
-        } elseif (strpos($fieldtype, 'email_admin_notification') !== false
+        } elseif (
+            strpos($fieldtype, 'email_admin_notification') !== false
             || strpos($fieldtype, 'email_admin_detailed_notification') !== false
         ) {
             $replFields['VIEWRESPONSEURL'] = gT("View response URL");
@@ -269,7 +270,6 @@ class LimeReplacementFieldsController extends  LSBaseController
             $replFields['ADMINNAME'] = gT("Name of the survey administrator");
             $replFields['ADMINEMAIL'] = gT("Email address of the survey administrator");
             return array($replFields, false);
-
         } elseif (strpos($fieldtype, 'email-admin-resp') !== false) {
             $replFields['VIEWRESPONSEURL'] = gT("View response URL");
             $replFields['EDITRESPONSEURL'] = gT("Edit response URL");
@@ -290,8 +290,8 @@ class LimeReplacementFieldsController extends  LSBaseController
             $replFields['ADMINNAME'] = gT("Name of the survey administrator");
             $replFields['ADMINEMAIL'] = gT("Email address of the survey administrator");
             return array($replFields, false);
-
-        } elseif (strpos($fieldtype, 'email_invitation') !== false
+        } elseif (
+            strpos($fieldtype, 'email_invitation') !== false
             || strpos($fieldtype, 'email_reminder') !== false
         ) {
             // these 2 fields are supported by email-inv and email-rem
@@ -335,7 +335,6 @@ class LimeReplacementFieldsController extends  LSBaseController
             $replFields['SURVEYURL'] = gT("URL of the survey");
             $replFields['EXPIRY'] = gT("Survey expiration date");
             return array($replFields, false);
-
         } elseif (strpos($fieldtype, 'email_confirmation') !== false) {
             $replFields['TOKEN'] = gT("Access code for this participant");
             $replFields['FIRSTNAME'] = gT("First name of the participant");
@@ -362,15 +361,15 @@ class LimeReplacementFieldsController extends  LSBaseController
                 }
             }
             return array($replFields, false);
-
-        } elseif (strpos($fieldtype, 'group-desc') !== false
+        } elseif (
+            strpos($fieldtype, 'group-desc') !== false
             || strpos($fieldtype, 'question-text') !== false
             || strpos($fieldtype, 'question-help') !== false
             || strpos($fieldtype, 'editgroup') !== false                // for translation
             || strpos($fieldtype, 'editgroup_desc') !== false           // for translation
             || strpos($fieldtype, 'editquestion') !== false             // for translation
             || strpos($fieldtype, 'editquestion_help') !== false        // for translation
-        ) { 
+        ) {
             $replFields['TOKEN:FIRSTNAME'] = gT("First name of the participant");
             $replFields['TOKEN:LASTNAME'] = gT("Last name of the participant");
             $replFields['TOKEN:EMAIL'] = gT("Email address of the participant");
@@ -386,7 +385,6 @@ class LimeReplacementFieldsController extends  LSBaseController
 
             $replFields['EXPIRY'] = gT("Survey expiration date");
             return array($replFields, true);
-
         } elseif (strpos($fieldtype, 'editanswer') !== false) {
             $replFields['TOKEN:FIRSTNAME'] = gT("First name of the participant");
             $replFields['TOKEN:LASTNAME'] = gT("Last name of the participant");
@@ -403,7 +401,6 @@ class LimeReplacementFieldsController extends  LSBaseController
 
             $replFields['EXPIRY'] = gT("Survey expiration date");
             return array($replFields, true);
-
         } elseif (strpos($fieldtype, 'assessment-text') !== false) {
             $replFields['TOTAL'] = gT("Overall assessment score");
             $replFields['PERC'] = gT("Assessment group score");
@@ -423,22 +420,23 @@ class LimeReplacementFieldsController extends  LSBaseController
                 "type" => 'general',
                 "value" => $value
             ];
-        } 
+        }
 
         if ($qid != null || $gid != null || $generalArray[1]) {
             $returnArray[gT('Questions')] = $this->collectQuestionReplacements($surveyid, $gid, $qid);
         }
 
 
-        $this->getController()->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
+        $this->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
         return;
     }
 
-    private function collectQuestionReplacements($surveyid, $gid = null, $qid = null) {
+    private function collectQuestionReplacements($surveyid, $gid = null, $qid = null)
+    {
         $oSurvey = Survey::model()->findByPk($surveyid);
         $oCurrentQuestion = Question::model()->findByPk($qid);
         $aResult = [];
-        
+
         $oCriteria = new CDbCriteria();
         $oCriteria->compare('t.sid', $surveyid);
         $oCriteria->compare('parent_qid', 0);
@@ -446,44 +444,47 @@ class LimeReplacementFieldsController extends  LSBaseController
         if ($gid != null && $qid == null) {
             $oGroup = QuestionGroup::model()->findByPk($gid);
             $oCriteria->with = ['group'];
-            $oCriteria->compare('group_order', '<='.$oGroup->group_order);
+            $oCriteria->compare('group_order', '<=' . $oGroup->group_order);
         }
 
         if ($qid != null) {
             $oCriteria->with = ['group'];
-            $oCriteria->compare('group_order', '<='.$oCurrentQuestion->group->group_order);
+            $oCriteria->compare('group_order', '<=' . $oCurrentQuestion->group->group_order);
             if ($oCurrentQuestion->parent_qid != 0) {
-                $oCriteria->compare('question_order', '<'.$oCurrentQuestion->parent->question_order);
+                $oCriteria->compare('question_order', '<' . $oCurrentQuestion->parent->question_order);
             } else {
-                $oCriteria->compare('question_order', '<'.$oCurrentQuestion->question_order );
+                $oCriteria->compare('question_order', '<' . $oCurrentQuestion->question_order);
             }
         }
 
         $aQuestions = Question::model()->findAll($oCriteria);
-        
-        uasort( 
-            $aQuestions, 
-            function ($a,$b) {
-            if ($a->gid != $b->gid) {
-                return $a->group->group_order < $b->group->group_order ? -1 : 1;
+
+        uasort(
+            $aQuestions,
+            function ($a, $b) {
+                if ($a->gid != $b->gid) {
+                    return $a->group->group_order < $b->group->group_order ? -1 : 1;
+                }
+                return $a->question_order < $b->question_order ? -1 : 1;
             }
-            return $a->question_order < $b->question_order ? -1 : 1;
-        });
+        );
 
         foreach ($aQuestions as $oQuestion) {
-            if ($oCurrentQuestion != null && $oCurrentQuestion->qid == $oQuestion->qid) { 
-                continue; 
+            if ($oCurrentQuestion != null && $oCurrentQuestion->qid == $oQuestion->qid) {
+                continue;
             }
 
             if (safecount($oQuestion->subquestions) != 0) {
                 $aSubquestions = $oQuestion->subquestions;
-                
-                uasort($aSubquestions, function ($a,$b) { return $a->question_order < $b->question_order ? -1 : 1; });
+
+                uasort($aSubquestions, function ($a, $b) {
+                    return $a->question_order < $b->question_order ? -1 : 1;
+                });
 
                 foreach ($aSubquestions as $oSubQuestion) {
-                    $aResult[$oQuestion->title.'_'.$oSubQuestion->title] = [
+                    $aResult[$oQuestion->title . '_' . $oSubQuestion->title] = [
                         'type' => 'question',
-                        'value' => ' -('.$oQuestion->title.')| '.$oSubQuestion->questionl10ns[$oSurvey->language]->question
+                        'value' => ' -(' . $oQuestion->title . ')| ' . $oSubQuestion->questionl10ns[$oSurvey->language]->question
                     ];
                 }
             } else {
@@ -496,4 +497,3 @@ class LimeReplacementFieldsController extends  LSBaseController
         return $aResult;
     }
 }
-
