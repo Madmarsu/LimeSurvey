@@ -30,7 +30,8 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
 
         if ($newType) {
-            $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid);
+            $returnArray = $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid);
+            $this->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
             return;
         }
 
@@ -410,7 +411,7 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
     }
 
-    public function actionGetNewTypeResponse($fieldtype, $surveyid = null, $gid = null, $qid = null)
+    private function getNewTypeResponse($fieldtype, $surveyid = null, $gid = null, $qid = null)
     {
         $returnArray = [];
         $generalArray = $this->_getReplacementFields($fieldtype, $surveyid);
@@ -427,8 +428,8 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
 
 
-        $this->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
-        return;
+       
+        return $returnArray;
     }
 
     private function collectQuestionReplacements($surveyid, $gid = null, $qid = null)
