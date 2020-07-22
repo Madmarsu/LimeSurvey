@@ -64,11 +64,7 @@ export default class LsReplacementsUI extends Plugin {
         const editor = this.editor;
         return new Promise((resolve,reject) => {
             $.ajax({
-<<<<<<< HEAD
                 url: LS.createUrl('limereplacementfields/index'),
-=======
-                url: LS.createUrl('limereplacementfields/getNewTypeResponse'),
->>>>>>> zoho-187-refactor-controller-limereplacementfields
                 data: LS.ld.merge({},{'newtype': 1, 'fieldtype': editor.config.get('lsExtension:fieldtype')}, editor.config.get('lsExtension:ajaxOptions'), data),
                 success: resolve,
                 error: reject
