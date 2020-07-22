@@ -30,8 +30,12 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
 
         if ($newType) {
+<<<<<<< HEAD
             $returnArray = $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid);
             $this->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
+=======
+            $this->getNewTypeResponse($fieldtype, $surveyid, $gid, $qid);
+>>>>>>> zoho-187-refactor-controller-limereplacementfields
             return;
         }
 
@@ -411,7 +415,11 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
     }
 
+<<<<<<< HEAD
     private function getNewTypeResponse($fieldtype, $surveyid = null, $gid = null, $qid = null)
+=======
+    public function actionGetNewTypeResponse($fieldtype, $surveyid = null, $gid = null, $qid = null)
+>>>>>>> zoho-187-refactor-controller-limereplacementfields
     {
         $returnArray = [];
         $generalArray = $this->_getReplacementFields($fieldtype, $surveyid);
@@ -428,8 +436,13 @@ class LimeReplacementFieldsController extends  LSBaseController
         }
 
 
+<<<<<<< HEAD
        
         return $returnArray;
+=======
+        $this->renderPartial('/admin/super/_renderJson', ['data' => $returnArray]);
+        return;
+>>>>>>> zoho-187-refactor-controller-limereplacementfields
     }
 
     private function collectQuestionReplacements($surveyid, $gid = null, $qid = null)
